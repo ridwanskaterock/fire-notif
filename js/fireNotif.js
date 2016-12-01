@@ -90,6 +90,21 @@ FireNotif.prototype.pushNotify = function(data) {
 }
 
 /**
+* Check is new item and ready to callback
+*
+* @param Array data
+*/
+FireNotif.prototype.readyToCallback = function(path) {
+    if (typeof this.newItem[path] != undefined) {
+      if (this.newItem[path]) {
+      	return true;
+      }
+    }
+
+    return false;
+}
+
+/**
 * Listener notification on child added
 *
 * @param Closure callback
@@ -102,6 +117,8 @@ FireNotif.prototype.subscribe = function(callback) {
   });
 
   this.notifRef().limitToLast(1).on('child_added', function(snap) {
-      return callback(snap.val());
+  	  if (fire.readyToCallback(fire.getPath())) {
+      	return callback(snap.val());
+  	  }
   });
 }
