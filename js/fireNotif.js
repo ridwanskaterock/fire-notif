@@ -40,3 +40,45 @@ Firenotif.prototype.setPath = function(path) {
 Firenotif.prototype.getPath = function() {
 	return this.pathName;
 }
+
+/**
+* Initialize firebase db reff
+*
+*/
+Firenotif.prototype.dbReff = function() {
+	return new Firebase(this.firebaseUrl);
+}
+
+/**
+* Get notif child by path
+*
+*/
+Firenotif.prototype.notifRef = function() {
+	return notifRef = this.dbReff().child(this.pathName);
+}
+
+/**
+* Push notification to path
+*
+* @param Array data
+*/
+Firenotif.prototype.pushNotify = function(data) {
+    if (typeof data != undefined) {
+      this.chatsRef().push(data);
+    }
+}
+
+/**
+* Listener notification on child added
+*
+* @param Closure callback
+*/
+Firenotif.prototype.subscribe = function(callback) {
+  this.chatsRef().once('value', function(messages) {
+    this.newItem = true;
+  });
+
+  this.chatsRef().limitToLast(1).on('child_added', function(snap) {
+      return callback(snap.val());
+  });
+}
