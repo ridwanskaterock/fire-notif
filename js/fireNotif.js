@@ -20,6 +20,8 @@ function FireNotif(url, path) {
 	if (typeof path != undefined) {
 		this.setPath(path);
 	}
+
+	this.newItem = {};
 }
 
 /**
@@ -27,7 +29,7 @@ function FireNotif(url, path) {
 *
 * @param String	path
 */
-Firenotif.prototype.setPath = function(path) {
+FireNotif.prototype.setPath = function(path) {
 	this.pathName = path;
 
 	return this;
@@ -37,15 +39,34 @@ Firenotif.prototype.setPath = function(path) {
 * Get path storage
 *
 */
-Firenotif.prototype.getPath = function() {
+FireNotif.prototype.getPath = function() {
 	return this.pathName;
+}
+
+/**
+* Set url firebase
+*
+* @param String	path
+*/
+FireNotif.prototype.setUrl = function(url) {
+	this.firebaseUrl = url;
+
+	return this;
+}
+
+/**
+* Get path storage
+*
+*/
+FireNotif.prototype.getUrl = function() {
+	return this.firebaseUrl;
 }
 
 /**
 * Initialize firebase db reff
 *
 */
-Firenotif.prototype.dbReff = function() {
+FireNotif.prototype.dbReff = function() {
 	return new Firebase(this.firebaseUrl);
 }
 
@@ -53,8 +74,8 @@ Firenotif.prototype.dbReff = function() {
 * Get notif child by path
 *
 */
-Firenotif.prototype.notifRef = function() {
-	return notifRef = this.dbReff().child(this.pathName);
+FireNotif.prototype.notifRef = function() {
+	return this.dbReff().child(this.pathName);
 }
 
 /**
@@ -62,9 +83,9 @@ Firenotif.prototype.notifRef = function() {
 *
 * @param Array data
 */
-Firenotif.prototype.pushNotify = function(data) {
+FireNotif.prototype.pushNotify = function(data) {
     if (typeof data != undefined) {
-      this.chatsRef().push(data);
+      this.notifRef().push(data);
     }
 }
 
@@ -73,12 +94,14 @@ Firenotif.prototype.pushNotify = function(data) {
 *
 * @param Closure callback
 */
-Firenotif.prototype.subscribe = function(callback) {
-  this.chatsRef().once('value', function(messages) {
-    this.newItem = true;
+FireNotif.prototype.subscribe = function(callback) {
+  var fire = this;
+
+  this.notifRef().once('value', function() {
+    fire.newItem[fire.getPath()] = true;
   });
 
-  this.chatsRef().limitToLast(1).on('child_added', function(snap) {
+  this.notifRef().limitToLast(1).on('child_added', function(snap) {
       return callback(snap.val());
   });
 }
