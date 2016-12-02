@@ -95,7 +95,7 @@ FireNotif.prototype.dbReff = function() {
 *
 */
 FireNotif.prototype.notifRef = function() {
-	return this.dbReff().child(this.pathName);
+	return this.dbReff().child(this.getPath());
 }
 
 /**
@@ -115,7 +115,7 @@ FireNotif.prototype.pushNotify = function(data) {
 		}
 
 		console.log(new FireException('invalid key'));
-		
+
 		return new FireException('invalid key');
 	}
 
