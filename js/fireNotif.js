@@ -105,13 +105,13 @@ FireNotif.prototype.notifRef = function() {
 */
 FireNotif.prototype.pushNotify = function(data) {
 	if (this.getKey() != null) {
-	    if (typeof data != undefined) {
-	      this.notifRef().push(data);
-	    }
+		if (typeof data != undefined) {
+			this.notifRef().push(data);
+		}
 	} else {
 		function FireException(message) {
-		   this.message = message;
-		   this.name = 'FireException';
+			this.message = message;
+			this.name = 'FireException';
 		}
 
 		console.log(new FireException('invalid key'));
@@ -128,13 +128,13 @@ FireNotif.prototype.pushNotify = function(data) {
 * @param Array data
 */
 FireNotif.prototype.readyToCallback = function(path) {
-    if (typeof this.newItem[path] != undefined) {
-      if (this.newItem[path]) {
-      	return true;
-      }
-    }
+	if (typeof this.newItem[path] != undefined) {
+		if (this.newItem[path]) {
+			return true;
+		}
+	}
 
-    return false;
+	return false;
 }
 
 /**
@@ -143,15 +143,15 @@ FireNotif.prototype.readyToCallback = function(path) {
 * @param Closure callback
 */
 FireNotif.prototype.subscribe = function(callback) {
-  var fire = this;
+	var fire = this;
 
-  this.notifRef().once('value', function() {
-    fire.newItem[fire.getPath()] = true;
-  });
+	this.notifRef().once('value', function() {
+		fire.newItem[fire.getPath()] = true;
+	});
 
-  this.notifRef().limitToLast(1).on('child_added', function(snap) {
-  	  if (fire.readyToCallback(fire.getPath())) {
-      	return callback(snap.val());
-  	  }
-  });
+	this.notifRef().limitToLast(1).on('child_added', function(snap) {
+		if (fire.readyToCallback(fire.getPath())) {
+			return callback(snap.val());
+		}
+	});
 }
