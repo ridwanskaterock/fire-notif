@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Listen on Child Added</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> 
+
+</head>
+<body>
+	<textarea id="message"></textarea>
+	<button id="btnSendMessage" href="javascript:void(0)">Send</button>
+
+	<script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="../js/fireNotif.js"></script>
+
+	<script type="text/javascript">
+		var notify = new FireNotif();
+
+		notify.setKey('q1rcKg8zxPUySGntLfnIYNMFufq2')
+			.setUrl('https://fire-notif.firebaseio.com/ ')
+			.setPath('notify');
+		
+		$('#btnSendMessage').click(function(){
+			var $message = $('#message');
+			var message = $message.val();
+
+			$.ajax({
+				url: 'server/send.php',
+				type: 'POST',
+				dataType: 'JSON',
+				data: {message: message},
+			})
+			.done(function(res) {
+				if (res.success) {
+					toastr['success'](res.message);
+				} else {
+					toastr['error'](res.message);
+				}
+				
+				$message.val('');
+			})
+			.fail(function() {
+				console.log("error");
+			});
+		});
+	</script>
+</body>
+</html>

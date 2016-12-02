@@ -3,36 +3,26 @@
 <head>
 	<title>Listen on Child Added</title>
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> 
+</head>
+<body>
+    
     <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="../js/fireNotif.js"></script>
 
     <script type="text/javascript">
+        var notify = new FireNotif();
 
-    	var notify = new FireNotif();
+        notify.setKey('q1rcKg8zxPUySGntLfnIYNMFufq2')
+            .setUrl('https://fire-notif.firebaseio.com/ ')
+            .setPath('notify');
 
-    	notify.setKey('q1rcKg8zxPUySGntLfnIYNMFufq2')
-    		.setUrl('https://fire-notif.firebaseio.com/ ')
-    		.setPath('notify');
-    		
-    	notify.pushNotify({
-    		message : 'Hello, notif.'
-    	});
-
-    	notify.setPath('chats').pushNotify({
-    		message : 'Hello, chats.'
-    	});
-
-    	notify.setPath('notify').subscribe(function(data){
-    		console.log(data);
-    	});
-    	
-    	notify.setPath('chats').subscribe(function(data){
-    		console.log(data);
-    	});
+        notify.subscribe(function(data){
+            toastr['success'](data.message);
+        });
     </script>
-</head>
-<body>
-
 </body>
 </html>
