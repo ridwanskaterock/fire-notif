@@ -22,6 +22,7 @@ function FireNotif(url, path) {
 	}
 
 	this.newItem = {};
+	this.fireKey = null;
 }
 
 /**
@@ -40,7 +41,26 @@ FireNotif.prototype.setPath = function(path) {
 *
 */
 FireNotif.prototype.getPath = function() {
-	return this.pathName;
+	return this.getKey() + '/' + this.pathName;
+}
+
+/**
+* Set key storage
+*
+* @param String	key
+*/
+FireNotif.prototype.setKey = function(key) {
+	this.fireKey = key;
+
+	return this;
+}
+
+/**
+* Get key storage
+*
+*/
+FireNotif.prototype.getKey = function() {
+	return this.fireKey;
 }
 
 /**
@@ -84,9 +104,22 @@ FireNotif.prototype.notifRef = function() {
 * @param Array data
 */
 FireNotif.prototype.pushNotify = function(data) {
-    if (typeof data != undefined) {
-      this.notifRef().push(data);
-    }
+	if (this.getKey() != null) {
+	    if (typeof data != undefined) {
+	      this.notifRef().push(data);
+	    }
+	} else {
+		function FireException(message) {
+		   this.message = message;
+		   this.name = 'FireException';
+		}
+
+		console.log(new FireException('invalid key'));
+		
+		return new FireException('invalid key');
+	}
+
+	return this;
 }
 
 /**
