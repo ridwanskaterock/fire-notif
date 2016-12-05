@@ -54,7 +54,7 @@ In subscribe.html file you just make script some it
 
     notify.subscribe(function(data){
         audio.play();
-        toastr.info(data.message, 'Notification', {timeOut: 15000})
+        toastr.info(data.message, 'Notification');
     });
 ```
 
@@ -82,8 +82,45 @@ If you send notification just make send.html
 	</script>
 ```
 
+send multiple notification
+```html	
+	<script type="text/javascript">
+		var notify = new FireNotif();
+		var audio = new Audio('notif.mp3');
+		
+		notify.setKey('q1rcKg9zxPUySGntLfnIYNMFuft2') // replace with your id
+			.setUrl('https://fire-notif.firebaseio.com/'); // Replace with your firebase app URL
+
+		notify.setPath('notification-frontend')
+			.pushNotify({
+			message : 'dear nice to meet you here',
+			title : 'Hello,'
+		});
+		
+		notify.setPath('notification-backend')
+			.pushNotify({
+			message : 'what\'s up with you',
+			title : 'Hello,'
+		});
+		
+		//listen notification
+		
+		notify.setPath('notification-backend')
+			.subscribe(function(data){
+			audio.play();
+			toastr.info(data.message, data.title);
+	        });
+		
+		notify.setPath('notification-frontend')
+			.subscribe(function(data){
+			audio.play();
+			toastr.info(data.message, data.title);
+	        });
+		
+	</script>
+```
 	
 Author
 -------
-
-[@riidwansktrcks]:http://twitter.com/riidwansktrcks
+* Muhamad Ridwan
+* ridwanskaterocks@gmail.com
