@@ -13,8 +13,8 @@
 * @param String	path
 */
 function FireNotif(url, path) {
-	this.firebaseUrl = 'https://telkom-transport.firebaseio.com';
-	this.pathName = 'tes';
+	this.firebaseUrl = '';
+	this.pathName = '';
 	
 	if (typeof url != 'undefined') {
 		this.firebaseUrl = url;
