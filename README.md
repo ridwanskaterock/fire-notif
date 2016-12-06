@@ -46,16 +46,16 @@ In subscribe.html file you just make script some it
 
 ```js	
 	var notify = new FireNotif();
-    var audio = new Audio('notif.mp3');
+	var audio = new Audio('notif.mp3');
 
-    notify.setKey('q1rcKg9zxPUySGntLfnIYNMFuft2')
-        .setUrl('https://fire-notif.firebaseio.com/') // Replace to your firebase app URL
-        .setPath('notify');
+	notify.setKey('q1rcKg9zxPUySGntLfnIYNMFuft2')
+	    .setUrl('https://fire-notif.firebaseio.com/') // Replace to your firebase app URL
+	    .setPath('notify');
 
-    notify.subscribe(function(data){
-        audio.play();
-        toastr.info(data.message, 'Notification');
-    });
+	notify.subscribe(function(data) {
+	    audio.play();
+	    toastr.info(data.message, 'Notification');
+	});
 ```
 
 If you send notification just make send.html
@@ -69,15 +69,15 @@ If you send notification just make send.html
 		var notify = new FireNotif();
 
 		notify.setKey('q1rcKg9zxPUySGntLfnIYNMFuft2')
-			.setUrl('https://fire-notif.firebaseio.com/') // Replace to your firebase app URL
-			.setPath('notify');
-		
-		$('#btnSendMessage').click(function(){
-			var message = $('#message').val();
+		    .setUrl('https://fire-notif.firebaseio.com/') // Replace to your firebase app URL
+		    .setPath('notify');
 
-	    	notify.pushNotify({
-	    		message : message
-	    	});
+		$('#btnSendMessage').click(function() {
+		    var message = $('#message').val();
+
+		    notify.pushNotify({
+			message: message
+		    });
 		});
 	</script>
 ```
@@ -87,35 +87,35 @@ send multiple notification
 	<script type="text/javascript">
 		var notify = new FireNotif();
 		var audio = new Audio('notif.mp3');
-		
+
 		notify.setKey('q1rcKg9zxPUySGntLfnIYNMFuft2') // replace with your id
-			.setUrl('https://fire-notif.firebaseio.com/'); // Replace with your firebase app URL
+		    .setUrl('https://fire-notif.firebaseio.com/'); // Replace with your firebase app URL
 
 		notify.setPath('notification-frontend')
-			.pushNotify({
-			message : 'dear nice to meet you here',
-			title : 'Hello,'
-		});
-		
+		    .pushNotify({
+			message: 'dear nice to meet you here',
+			title: 'Hello,'
+		    });
+
 		notify.setPath('notification-backend')
-			.pushNotify({
-			message : 'what\'s up with you',
-			title : 'Hello,'
-		});
-		
+		    .pushNotify({
+			message: 'what\'s up with you',
+			title: 'Hello,'
+		    });
+
 		//listen notification
-		
+
 		notify.setPath('notification-backend')
-			.subscribe(function(data){
+		    .subscribe(function(data) {
 			audio.play();
 			toastr.info(data.message, data.title);
-	        });
-		
+		    });
+
 		notify.setPath('notification-frontend')
-			.subscribe(function(data){
+		    .subscribe(function(data) {
 			audio.play();
 			toastr.info(data.message, data.title);
-	        });
+		    });
 		
 	</script>
 ```
