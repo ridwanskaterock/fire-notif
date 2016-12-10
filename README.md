@@ -11,6 +11,12 @@ Requirements
 	- PHP 5.5 or Higher
 
 
+Author
+------------
+* Muhamad Ridwan
+* ridwanskaterocks@gmail.com
+
+
 Instalation
 -----------
 * Include firebase 
@@ -76,7 +82,7 @@ If you send notification just make send.html
 		    var message = $('#message').val();
 
 		    notify.pushNotify({
-			message: message
+				message: message
 		    });
 		});
 	</script>
@@ -91,36 +97,32 @@ send multiple notification
 		notify.setKey('q1rcKg9zxPUySGntLfnIYNMFuft2') // replace with your id
 		    .setUrl('https://fire-notif.firebaseio.com/'); // Replace with your firebase app URL
 
-		notify.setPath('notification-frontend')
+		notify.setPath('notification-frontend/user1')
 		    .pushNotify({
-			message: 'dear nice to meet you here',
-			title: 'Hello,'
+				message: 'dear nice to meet you here',
+				title: 'Hello,'
 		    });
 
-		notify.setPath('notification-backend')
+		notify.setPath('notification-backend/user2')
 		    .pushNotify({
-			message: 'what\'s up with you',
-			title: 'Hello,'
+				message: 'what\'s up with you',
+				title: 'Hello,'
 		    });
 
 		//listen notification
 
-		notify.setPath('notification-backend')
+		notify.setPath('notification-backend/user2')
 		    .subscribe(function(data) {
-			audio.play();
-			toastr.info(data.message, data.title);
-		    });
+				audio.play();
+				toastr.info(data.message, data.title);
+			});
 
-		notify.setPath('notification-frontend')
+		notify.setPath('notification-frontend/user1')
 		    .subscribe(function(data) {
-			audio.play();
-			toastr.info(data.message, data.title);
+				audio.play();
+				toastr.info(data.message, data.title);
 		    });
 		
 	</script>
 ```
 	
-Author
--------
-* Muhamad Ridwan
-* ridwanskaterocks@gmail.com
